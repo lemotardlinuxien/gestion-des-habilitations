@@ -1,0 +1,67 @@
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environnements virtuels
+.venv/
+venv/
+env/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Configuration locale et secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Données de l'application
+database/
+sauvegardes/
+pdf/
+exports/
+salariés/
+graphiques/
+logs/
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite-*
+*.xlsx
+*.xls
+*.log
+
+# Fichiers temporaires
+*.tmp
+*.bak
+*.old
+*~
+
+# Livrables de compilation
+build/
+dist/
+*.spec
+
+# Fichiers de configuration locale supplémentaires
+*.local
+*.secret
+secrets/
+config.local.py
+
+# Sauvegardes et fichiers temporaires supplémentaires
+*.backup
+*.swp
+*.swo
+
+# Rapports temporaires d'audit
+AUDIT_PRE_PUBLICATION.md.bak

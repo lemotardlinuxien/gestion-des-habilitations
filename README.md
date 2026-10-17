@@ -45,7 +45,7 @@ Sous Windows, créez l'environnement avec `py -m venv .venv`, activez-le avec `.
 
 L'application utilise des données professionnelles potentiellement personnelles. Ne publiez jamais une base SQLite réelle, des fichiers Excel contenant des salariés, des documents, des journaux, des exports ou des identifiants de messagerie.
 
-La version candidate V52 place les données persistantes dans le répertoire de données de l'utilisateur :
+La version candidate V53 place les données persistantes dans le répertoire de données de l'utilisateur :
 
 - Linux : `~/.local/share/GestionHabilitations/` par défaut (ou `$XDG_DATA_HOME/GestionHabilitations/` si `XDG_DATA_HOME` est défini).
 - Windows : `%LOCALAPPDATA%\\GestionHabilitations\\`.
@@ -63,6 +63,38 @@ Le packaging avec PyInstaller est prévu, mais les exécutables Windows et Linux
 ## Tests
 
 La vérification de syntaxe Python ne remplace pas les tests fonctionnels. Avant toute publication, tester notamment la première création de compte administrateur, la connexion, l'import/export, les sauvegardes, la génération PDF/graphiques, les courriels et l'accès aux documents salariés.
+
+## Captures d'écran
+
+Les captures suivantes présentent l'interface de Gestion des habilitations V53 et ses principales fonctionnalités.
+
+### Fenêtre principale
+
+![Fenêtre principale de l'application](screenshots/fenetre_principale.png)
+
+### Recherche, tableau de bord et tableau des salariés
+
+![Recherche et tableau de bord](screenshots/recherche_tableau_bord.png)
+
+### Fiche salarié et boutons d'action
+
+![Fiche salarié et boutons d'action](screenshots/fiche_salarie.png)
+
+### Paramètres de l'application
+
+![Fenêtre des paramètres](screenshots/parametres.png)
+
+### Gestion des documents
+
+![Gestion des documents des salariés](screenshots/gestion_documents.png)
+
+### Graphique des habilitations
+
+![Graphique de suivi des habilitations](screenshots/graphique_habilitations.png)
+
+### Export PDF par secteur
+
+![Exemple de rapport PDF](screenshots/export_pdf.png)
 
 ## Licence
 

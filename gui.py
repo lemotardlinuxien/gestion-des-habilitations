@@ -2199,6 +2199,15 @@ class GestionHabilitationsApp:
             fill_value=""
         )
 
+        # Tri alphabétique croissant par nom
+        if "Nom" in df.columns:
+            df = df.sort_values(
+                by="Nom",
+                key=lambda colonne: colonne.astype(str).str.casefold(),
+                kind="stable",
+                na_position="last",
+            )
+
         self.tree.delete(
             *self.tree.get_children()
         )
@@ -3840,35 +3849,22 @@ class GestionHabilitationsApp:
             "mail", 12
         )
 
-        ttk.Button(
-            fenetre,
-            text="Gestion des mails",
-            image=self.icone_mails,
-            compound="left",
-            command=self.gestion_mails,
-            bootstyle="secondary"
-        ).pack(
-            fill="x",
-            padx=20,
-            pady=5
-        )
-
-        self.icone_historique_envois = charger_icone(
-            "clock-3", 12
+        self.icone_gestion_habilitations = charger_icone(
+            "shield-check", 12
         )
 
         ttk.Button(
             fenetre,
-            text="Historique des envois",
-            image=self.icone_historique_envois,
+            text="Gestion des habilitations",
+            image=self.icone_gestion_habilitations,
             compound="left",
-            command=self.historique_mails,
-            bootstyle="dark"
+            command=self.gestion_habilitations,
+            bootstyle="info"
         ).pack(fill="x", padx=20, pady=5)
 
-        # ==========================================
-        # Paramètres SMTP
-        # ==========================================
+        self.icone_rapport_logs = charger_icone(
+            "file-text", 12
+        )
 
         self.icone_smtp = charger_icone(
             "key-round", 12
@@ -3887,9 +3883,22 @@ class GestionHabilitationsApp:
             pady=5
         )
 
-        # ==========================================
-        # Comptes utilisateurs
-        # ==========================================
+        self.icone_mails = charger_icone(
+            "mail", 12
+        )
+
+        ttk.Button(
+            fenetre,
+            text="Gestion des mails",
+            image=self.icone_mails,
+            compound="left",
+            command=self.gestion_mails,
+            bootstyle="secondary"
+        ).pack(
+            fill="x",
+            padx=20,
+            pady=5
+        )
 
         self.icone_comptes_utilisateurs = charger_icone(
             "users", 12
@@ -3908,17 +3917,17 @@ class GestionHabilitationsApp:
             pady=5
         )
 
-        self.icone_gestion_habilitations = charger_icone(
-            "shield-check", 12
+        self.icone_historique_envois = charger_icone(
+            "clock-3", 12
         )
 
         ttk.Button(
             fenetre,
-            text="Gestion des habilitations",
-            image=self.icone_gestion_habilitations,
+            text="Historique des envois",
+            image=self.icone_historique_envois,
             compound="left",
-            command=self.gestion_habilitations,
-            bootstyle="info"
+            command=self.historique_mails,
+            bootstyle="dark"
         ).pack(fill="x", padx=20, pady=5)
 
         self.icone_rapport_logs = charger_icone(
@@ -7023,8 +7032,8 @@ class GestionHabilitationsApp:
             choix_fusion = messagebox.askyesnocancel(
                 "Ajouter un document",
                 (
-                    "Souhaitez-vous convertir/fusionner plusieurs images ou PDF ?\\n\\n"
-                    "Oui : sélectionner plusieurs fichiers et créer un PDF.\\n"
+                    "Souhaitez-vous convertir/fusionner plusieurs images ou PDF ?"
+                    "Oui : sélectionner plusieurs fichiers et créer un PDF."
                     "Non : ajouter un seul document, quel que soit son format."
                 ),
                 parent=fenetre,
@@ -7049,7 +7058,7 @@ class GestionHabilitationsApp:
                     log_warning(f"Échec de la fusion des documents : {erreur}")
                     self.messages.error(
                         "Fusion PDF impossible",
-                        f"Une erreur inattendue est survenue.\\n\\n{erreur}",
+                        f"Une erreur inattendue est survenue. {erreur}",
                         parent=fenetre,
                     )
                     return
@@ -7059,7 +7068,7 @@ class GestionHabilitationsApp:
                 actualiser_liste()
                 self.messages.info(
                     "PDF ajouté",
-                    f"Le PDF fusionné a été enregistré :\\n\\n{chemin.name}",
+                    f"Le PDF fusionné a été enregistré : {chemin.name}",
                     parent=fenetre,
                 )
                 return
@@ -7077,8 +7086,8 @@ class GestionHabilitationsApp:
                 confirmation = self.messages.confirm(
                     "Document déjà existant",
                     (
-                        "Un document portant ce nom existe déjà.\\n\\n"
-                        f"{fichier_source.name}\\n\\n"
+                        "Un document portant ce nom existe déjà."
+                        f"{fichier_source.name}"
                         "Voulez-vous le remplacer ?"
                     ),
                     parent=fenetre,
@@ -7092,14 +7101,14 @@ class GestionHabilitationsApp:
                 except (FileNotFoundError, OSError) as erreur:
                     self.messages.error(
                         "Erreur",
-                        f"Impossible de remplacer le document.\\n\\n{erreur}",
+                        f"Impossible de remplacer le document. {erreur}",
                         parent=fenetre,
                     )
                     return
             except (FileNotFoundError, OSError) as erreur:
                 self.messages.error(
                     "Erreur",
-                    f"Impossible d'ajouter le document.\\n\\n{erreur}",
+                    f"Impossible d'ajouter le document. {erreur}",
                     parent=fenetre,
                 )
                 return
@@ -7107,7 +7116,7 @@ class GestionHabilitationsApp:
             actualiser_liste()
             self.messages.info(
                 "Document ajouté",
-                f"Le document a été ajouté :\\n\\n{chemin.name}",
+                f"Le document a été ajouté : {chemin.name}",
                 parent=fenetre,
             )
 
@@ -7138,7 +7147,7 @@ class GestionHabilitationsApp:
             except (FileNotFoundError, OSError) as erreur:
                 self.messages.error(
                     "Ouverture impossible",
-                    f"Impossible d'ouvrir le document.\\n\\n{erreur}",
+                    f"Impossible d'ouvrir le document. {erreur}",
                     parent=fenetre,
                 )
 
@@ -7173,7 +7182,7 @@ class GestionHabilitationsApp:
             except (FileNotFoundError, OSError) as erreur:
                 self.messages.error(
                     "Impression impossible",
-                    f"Impossible d'ouvrir le document pour impression.\n\n{erreur}",
+                    f"Impossible d'ouvrir le document pour impression. {erreur}",
                     parent=fenetre,
                 )
                 return
@@ -7250,7 +7259,7 @@ class GestionHabilitationsApp:
             except OSError as erreur:
                 self.messages.error(
                     "Erreur",
-                    f"Impossible de renommer le document.\n\n{erreur}"
+                    f"Impossible de renommer le document. {erreur}"
                 )
                 return
 
@@ -7259,7 +7268,7 @@ class GestionHabilitationsApp:
             self.messages.info(
                 "Document renommé",
                 (
-                    "Le document a été renommé :\n\n"
+                    "Le document a été renommé : "
                     f"{nouveau_chemin.name}"
                 )
             )
@@ -7290,7 +7299,7 @@ class GestionHabilitationsApp:
             confirmation = self.messages.confirm(
                 "Supprimer le document",
                 (
-                    "Voulez-vous vraiment supprimer ce document ?\n\n"
+                    "Voulez-vous vraiment supprimer ce document ? "
                     f"{chemin_document.name}"
                 ),
                 parent=fenetre
@@ -7314,7 +7323,7 @@ class GestionHabilitationsApp:
             except OSError as erreur:
                 self.messages.error(
                     "Erreur",
-                    f"Impossible de supprimer le document.\n\n{erreur}"
+                    f"Impossible de supprimer le document.{erreur}"
                 )
                 return
 
@@ -7322,7 +7331,7 @@ class GestionHabilitationsApp:
 
             self.messages.info(
                 "Document supprimé",
-                f"Le document a été supprimé :\n\n{chemin_document.name}"
+                f"Le document a été supprimé : {chemin_document.name}"
             )
 
         cadre_boutons = ttk.Frame(
@@ -7411,9 +7420,13 @@ class GestionHabilitationsApp:
             padx=5
         )
 
+        self.icone_fermer = charger_icone("x", 12)
+
         ttk.Button(
             cadre_boutons,
             text="Fermer",
+            image=self.icone_fermer,
+            compound="left",
             command=fenetre.destroy,
             bootstyle="secondary"
         ).pack(

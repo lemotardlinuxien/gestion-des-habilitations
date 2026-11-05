@@ -2,7 +2,7 @@
 
 Application de bureau Python pour gérer les habilitations du personnel, suivre leurs échéances et organiser les documents associés aux salariés.
 
-> **État du projet :** V53 — préparation à la publication. L'application a été lancée avec succès sous Linux Mint et les vérifications techniques préliminaires ont été effectuées. Les tests fonctionnels complets et le packaging restent à finaliser.
+> **État du projet :** V54 — préparation à la publication. L'application a été lancée avec succès sous Linux Mint et les vérifications techniques préliminaires ont été effectuées. Les tests fonctionnels complets et le packaging restent à finaliser.
 
 ## Fonctionnalités principales
 
@@ -45,7 +45,7 @@ Sous Windows, créez l'environnement avec `py -m venv .venv`, activez-le avec `.
 
 L'application utilise des données professionnelles potentiellement personnelles. Ne publiez jamais une base SQLite réelle, des fichiers Excel contenant des salariés, des documents, des journaux, des exports ou des identifiants de messagerie.
 
-La version candidate V53 place les données persistantes dans le répertoire de données de l'utilisateur :
+La version candidate V54 place les données persistantes dans le répertoire de données de l'utilisateur :
 
 - Linux : `~/.local/share/GestionHabilitations/` par défaut (ou `$XDG_DATA_HOME/GestionHabilitations/` si `XDG_DATA_HOME` est défini).
 - Windows : `%LOCALAPPDATA%\\GestionHabilitations\\`.
@@ -66,7 +66,7 @@ La vérification de syntaxe Python ne remplace pas les tests fonctionnels. Avant
 
 ## Captures d'écran
 
-Les captures suivantes présentent l'interface de Gestion des habilitations V53 et ses principales fonctionnalités.
+Les captures suivantes présentent l'interface de Gestion des habilitations V54 et ses principales fonctionnalités.
 
 ### Fenêtre principale
 
@@ -87,6 +87,10 @@ Les captures suivantes présentent l'interface de Gestion des habilitations V53 
 ### Gestion des documents
 
 ![Gestion des documents des salariés](screenshots/gestion_documents.png)
+
+### Ajouter un document
+
+![Fenêtre d’ajout de document avec sélection et dépôt de fichiers](screenshots/Ajouter_un_document.png)
 
 ### Graphique des habilitations
 

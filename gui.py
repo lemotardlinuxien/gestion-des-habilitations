@@ -67,7 +67,6 @@ from dossier_manager import (
     supprimer_document,
     selectionner_document,
     copier_document,
-    convertir_et_fusionner_documents,
     ouvrir_document
 )
 
@@ -6798,7 +6797,7 @@ class GestionHabilitationsApp:
         salarie = ligne.iloc[0]
 
         try:
-            chemin = convertir_et_fusionner_documents(
+            chemin = PDFManager.convertir_et_fusionner_documents(
                 nom=salarie["Nom"],
                 prenom=salarie["Prénom"],
                 id_salarie=salarie["ID"],
@@ -7032,8 +7031,8 @@ class GestionHabilitationsApp:
             choix_fusion = messagebox.askyesnocancel(
                 "Ajouter un document",
                 (
-                    "Souhaitez-vous convertir/fusionner plusieurs images ou PDF ?"
-                    "Oui : sélectionner plusieurs fichiers et créer un PDF."
+                    "Souhaitez-vous convertir/fusionner plusieurs images ou PDF ?\n\n"
+                    "Oui : sélectionner plusieurs fichiers et créer un PDF.\n"
                     "Non : ajouter un seul document, quel que soit son format."
                 ),
                 parent=fenetre,
@@ -7043,7 +7042,7 @@ class GestionHabilitationsApp:
 
             if choix_fusion:
                 try:
-                    chemin = convertir_et_fusionner_documents(
+                    chemin = PDFManager.convertir_et_fusionner_documents(
                         nom=nom,
                         prenom=prenom,
                         id_salarie=id_salarie,

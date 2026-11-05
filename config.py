@@ -8,7 +8,7 @@ import sys
 # VERSION APPLICATION
 # ==========================================
 
-VERSION = "V53"
+VERSION = "V54"
 APP_NAME = "GestionHabilitations"
 
 

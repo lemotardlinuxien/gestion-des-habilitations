@@ -57,3 +57,12 @@ config.local.py
 *.env
 secrets/
 credentials/
+
+# Fichiers générés par les compilations Windows
+Build/
+Dist/
+build/
+dist/
+
+# Raccourcis Windows générés automatiquement
+*.lnk

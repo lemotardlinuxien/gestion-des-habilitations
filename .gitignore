@@ -1,30 +1,40 @@
-
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyd
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
 # Environnements virtuels
 .venv/
 venv/
 env/
+ENV/
 
-# IDE / OS
+# IDE et système
 .idea/
 .vscode/
+*.swp
+*.swo
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Configuration locale et secrets
-.env
-.env.*
-!.env.example
-*.pem
-*.key
-*.p12
-*.pfx
+# Compilation / distribution
+build/
+dist/
+*.spec
+*.log
+*.tmp
 
-# Données de l'application
+# Données locales de l'application - NE PAS PUBLIER
+Donnees/
+.database/
 database/
 sauvegardes/
 pdf/
@@ -33,35 +43,17 @@ salariés/
 graphiques/
 logs/
 *.db
-*.db-*
 *.sqlite
 *.sqlite3
-*.sqlite-*
 *.xlsx
 *.xls
-*.log
+*.pdf
+.installation_initialisee
 
-# Fichiers temporaires
-*.tmp
-*.bak
-*.old
-*~
-
-# Livrables de compilation
-build/
-dist/
-*.spec
-
-# Fichiers de configuration locale supplémentaires
-*.local
-*.secret
-secrets/
+# Paramètres et secrets locaux
 config.local.py
-
-# Sauvegardes et fichiers temporaires supplémentaires
-*.backup
-*.swp
-*.swo
-
-# Rapports temporaires d'audit
-AUDIT_PRE_PUBLICATION.md.bak
+.env
+.env.*
+*.env
+secrets/
+credentials/

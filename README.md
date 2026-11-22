@@ -1,105 +1,66 @@
 # Gestion des habilitations
 
-Application de bureau Python pour gérer les habilitations du personnel, suivre leurs échéances et organiser les documents associés aux salariés.
+Application de bureau Python destinée à la gestion des salariés et au suivi de leurs habilitations. Le dépôt propose deux éditions distinctes, construites sur un socle applicatif commun.
 
-> **État du projet :** V54 — préparation à la publication. L'application a été lancée avec succès sous Linux Mint et les vérifications techniques préliminaires ont été effectuées. Les tests fonctionnels complets et le packaging restent à finaliser.
+**Auteur :** Fabrice BONNAMY
+**Licence :** PolyForm Noncommercial License 1.0.0 — voir [LICENSE](LICENSE).
+
+## Choisir une édition
+
+| Édition | Version | Emplacement des données | Sources |
+|---|---|---|---|
+| **Édition Fixe** | V57 | Profil utilisateur du système | [`Edition_Fixe/`](Edition_Fixe/) |
+| **Édition Nomade** | V58 | Dossier `Donnees` à côté de l’exécutable | [`Edition_Nomade/`](Edition_Nomade/) |
+
+### Édition Fixe — V57
+
+Les données sont stockées indépendamment du dossier de l’application :
+- Windows : `%LOCALAPPDATA%\GestionHabilitations`
+- Linux : `$XDG_DATA_HOME/GestionHabilitations` si défini, sinon `~/.local/share/GestionHabilitations`
+- macOS : `~/Library/Application Support/GestionHabilitations`
+
+### Édition Nomade — V58
+
+Les données sont stockées dans un dossier `Donnees` placé à côté de l’exécutable. L’application et ce dossier peuvent être déplacés ensemble, sous réserve que le support soit accessible en écriture.
 
 ## Fonctionnalités principales
 
 - Gestion des salariés et de leurs habilitations.
-- Stockage des données dans une base SQLite.
-- Import et export Excel.
-- Contrôle des dates d'échéance et statistiques.
-- Génération de PDF et de graphiques.
-- Gestion de documents associés aux salariés, dont la fusion de documents PDF.
-- Gestion des paramètres d'envoi de courriels et des comptes utilisateurs.
-
-## Prérequis
-
-- Python 3.10 ou plus récent recommandé.
-- Tkinter installé pour la version de Python utilisée. Sous Linux, Tkinter peut devoir être installé par le gestionnaire de paquets de la distribution.
-- Les dépendances Python listées dans `requirements.txt`.
+- Suivi des échéances et alertes de validité.
+- Recherche, tableau de bord, graphiques et statistiques.
+- Gestion des documents associés aux salariés.
+- Conversion et fusion de documents en PDF.
+- Gestion des comptes utilisateurs et des accès.
+- Paramétrage et envoi de courriels.
+- Sauvegardes SQLite, vérification d’intégrité et mécanismes de récupération.
 
 ## Installation depuis les sources
 
-1. Clonez le dépôt.
-2. Créez et activez un environnement virtuel.
-3. Installez les dépendances.
-4. Lancez l'application.
-
-Exemple sous Linux :
+Chaque édition possède ses propres fichiers `requirements.txt` et `requirements-build.txt`. Ouvrir le dossier de l’édition choisie, créer un environnement virtuel, installer les dépendances, puis lancer `main.py`.
 
 ```bash
-git clone <URL_DU_DEPOT>
-cd <DOSSIER_DU_DEPOT>
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
+python -m venv .venv
+source .venv/bin/activate  # Linux
 python -m pip install -r requirements.txt
 python main.py
 ```
 
-Sous Windows, créez l'environnement avec `py -m venv .venv`, activez-le avec `.venv\\Scripts\\activate` puis installez `requirements.txt` avec `py -m pip install -r requirements.txt`. Lancez ensuite `py main.py`.
+Sous Windows PowerShell, activer l’environnement avec `.venv\Scripts\Activate.ps1`. La compilation Windows doit être réalisée sous Windows avec les dépendances de `requirements-build.txt`.
 
-## Données et confidentialité
+## Sauvegardes et récupération
 
-L'application utilise des données professionnelles potentiellement personnelles. Ne publiez jamais une base SQLite réelle, des fichiers Excel contenant des salariés, des documents, des journaux, des exports ou des identifiants de messagerie.
+La rotation conserve au maximum deux fichiers SQLite dans chacun des emplacements de sauvegarde concernés. Cette limite s’applique séparément à chaque dossier, et non à l’ensemble des dossiers. Les sauvegardes automatiques sont vérifiées avant la rotation.
 
-La version candidate V54 place les données persistantes dans le répertoire de données de l'utilisateur :
+Ne pas supprimer le marqueur d’installation ni contourner le mécanisme de récupération lorsqu’une base existante est absente ou endommagée. Restaurer une sauvegarde vérifiée selon la procédure prévue par l’application. Il est recommandé de conserver également une copie indépendante des sauvegardes sur un autre support.
 
-- Linux : `~/.local/share/GestionHabilitations/` par défaut (ou `$XDG_DATA_HOME/GestionHabilitations/` si `XDG_DATA_HOME` est défini).
-- Windows : `%LOCALAPPDATA%\\GestionHabilitations\\`.
+## Sécurité et données personnelles
 
-Les fichiers de données ne doivent pas être versionnés dans Git. Le fichier `.gitignore` exclut les principaux dossiers de données et fichiers locaux.
+Ne publiez jamais de base de données réelle, fichier Excel de travail, sauvegarde, document salarié, journal contenant des données personnelles, mot de passe ou secret. Consultez [SECURITY.md](SECURITY.md) et vérifiez le contenu de l’index Git avant chaque publication.
 
-## Courriels et identifiants
+## Historique et contribution
 
-Ne stockez pas de mots de passe, jetons ou secrets dans le code source ou dans le dépôt. L'application utilise `keyring` pour le stockage sécurisé des identifiants SMTP lorsque le système le permet. Vérifiez la configuration du trousseau de clés sur chaque poste.
+- [CHANGELOG.md](CHANGELOG.md)
+- [SECURITY.md](SECURITY.md)
+- [LICENSE](LICENSE)
 
-## Construction d'exécutables
-
-Le packaging avec PyInstaller est prévu, mais les exécutables Windows et Linux doivent être construits et testés sur leurs systèmes cibles respectifs. La liste de dépendances de construction se trouve dans `requirements-build.txt`.
-
-## Tests
-
-La vérification de syntaxe Python ne remplace pas les tests fonctionnels. Avant toute publication, tester notamment la première création de compte administrateur, la connexion, l'import/export, les sauvegardes, la génération PDF/graphiques, les courriels et l'accès aux documents salariés.
-
-## Captures d'écran
-
-Les captures suivantes présentent l'interface de Gestion des habilitations V54 et ses principales fonctionnalités.
-
-### Fenêtre principale
-
-![Fenêtre principale de l'application](screenshots/fenetre_principale.png)
-
-### Recherche, tableau de bord et tableau des salariés
-
-![Recherche et tableau de bord](screenshots/recherche_tableau_bord.png)
-
-### Fiche salarié et boutons d'action
-
-![Fiche salarié et boutons d'action](screenshots/fiche_salarie.png)
-
-### Paramètres de l'application
-
-![Fenêtre des paramètres](screenshots/parametres.png)
-
-### Gestion des documents
-
-![Gestion des documents des salariés](screenshots/gestion_documents.png)
-
-### Ajouter un document
-
-![Fenêtre d’ajout de document avec sélection et dépôt de fichiers](screenshots/Ajouter_un_document.png)
-
-### Graphique des habilitations
-
-![Graphique de suivi des habilitations](screenshots/graphique_habilitations.png)
-
-### Export PDF par secteur
-
-![Exemple de rapport PDF](screenshots/export_pdf.png)
-
-## Licence
-
-Le projet est distribué sous la [PolyForm Noncommercial License 1.0.0](https://polyformproject.org/licenses/noncommercial/1.0.0). Cette licence encadre les usages non commerciaux selon ses conditions. Consultez le fichier `LICENSE` pour le texte intégral.
+Les sources de chaque édition sont documentées dans leur dossier respectif.
